@@ -1,0 +1,13 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build -t amc .
+
+test:
+  override:
+    - docker run -d --name amc -p 8081:8081 amc; sleep 5
+    - curl --retry 10 --retry-delay 5 -v http://localhost:8081/
