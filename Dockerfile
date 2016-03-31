@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 ENV TZ=Asia/Tokyo \
-    VERSION=3.6.6
+    VERSION=3.6.8
 
 RUN apt-get update \
     && apt-get install -y wget gcc python python-dev \
