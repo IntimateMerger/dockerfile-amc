@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 ENV TZ=Asia/Tokyo \
-    VERSION=3.6.10.1
+    VERSION=3.6.11
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget gcc python python-dev && \
