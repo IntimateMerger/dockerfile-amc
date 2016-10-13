@@ -1,7 +1,6 @@
 FROM debian:jessie
 
-ENV TZ=Asia/Tokyo \
-    VERSION=3.6.11
+ENV VERSION=3.6.12
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget gcc python python-dev && \
@@ -14,8 +13,8 @@ RUN apt-get update && \
     ln -sf /dev/stdout /var/log/amc/aerospike_amc.log
 
 # Patch
-RUN TXT='\    new_sets = []\n    for st in response["sets"]:\n        try:\n            st["set_name"].encode("ascii")\n            new_sets.append(st)\n        except:\n            pass\n    response["sets"] = new_sets' && \
-    sed -i -e "180i $TXT" /opt/amc/server/flaskapp.py
+#RUN TXT='\    new_sets = []\n    for st in response["sets"]:\n        try:\n            st["set_name"].encode("ascii")\n            new_sets.append(st)\n        except:\n            pass\n    response["sets"] = new_sets' && \
+#    sed -i -e "180i $TXT" /opt/amc/server/flaskapp.py
 
 EXPOSE 8081
 
