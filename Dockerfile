@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-ENV VERSION=3.6.12
+ENV VERSION=3.6.13
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget gcc python python-dev && \
