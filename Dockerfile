@@ -1,21 +1,11 @@
-FROM debian:jessie
+FROM alpine:3.5
 
-ENV VERSION=3.6.13
+LABEL maintainer "mats116 <mats.kazuki@gmail.com>"
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget gcc python python-dev && \
-    wget "http://www.aerospike.com/artifacts/aerospike-amc-community/${VERSION}/aerospike-amc-community-${VERSION}.all.x86_64.deb" && \
-    dpkg -i aerospike-amc-community-${VERSION}.all.x86_64.deb && \
-    rm -f aerospike-amc-community-${VERSION}.all.x86_64.deb && \
-    apt-get clean && \
-    rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* && \
-    dpkg --remove wget && \
-    ln -sf /dev/stdout /var/log/amc/aerospike_amc.log
-
-# Patch
-#RUN TXT='\    new_sets = []\n    for st in response["sets"]:\n        try:\n            st["set_name"].encode("ascii")\n            new_sets.append(st)\n        except:\n            pass\n    response["sets"] = new_sets' && \
-#    sed -i -e "180i $TXT" /opt/amc/server/flaskapp.py
+RUN apk add --no-cache curl && \
+    curl -sSL "http://artifacts.aerospike.com/aerospike-amc-community/4.0.11/aerospike-amc-community-4.0.11-linux.tar.gz" | tar -xvz -C / && \
+    ln -sf /dev/stdout /var/log/amc/amc.log
 
 EXPOSE 8081
 
-CMD /opt/amc/bin/gunicorn --config=/etc/amc/config/gunicorn_config.py flaskapp:app
+CMD /opt/amc/amc -config-file=/etc/amc/amc.conf
