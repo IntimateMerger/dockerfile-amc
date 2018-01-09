@@ -7,12 +7,6 @@ Dockerfile for Aerospike Management Console
 
 ### Environment
 
-If you don't set the env, Rundeck use the default env.
-
-```yml
-TZ: Asia/Tokyo
-```
-
 ### Example
 
 ```bash
